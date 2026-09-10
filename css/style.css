@@ -1,0 +1,582 @@
+/* ============================================================================
+   ARQUIVO: css/style.css
+   ----------------------------------------------------------------------------
+   O QUE É ESTE ARQUIVO?
+   É a folha de estilos (CSS) do site. O CSS serve para dizer COMO as coisas
+   devem APARECER: cores, tamanhos, espaçamentos, posição na tela etc.
+
+   COMO ELE SE CONECTA COM O HTML?
+   Cada página HTML tem, dentro do <head>, esta linha:
+       <link rel="stylesheet" href="css/style.css">
+   Ela diz ao navegador: "baixe esse arquivo e use as regras dele nesta página".
+
+   POR QUE UM ARQUIVO SEPARADO (e não estilo dentro do HTML)?
+   1. Reutilização: as 4 páginas usam o MESMO arquivo. Mudou aqui, mudou em tudo.
+   2. Organização: HTML cuida do CONTEÚDO, CSS cuida da APARÊNCIA.
+   3. Performance: o navegador baixa o CSS uma vez e reaproveita nas páginas.
+
+   COMO LER UMA REGRA CSS?
+   Exemplo:
+       p { color: blue; }
+       │   └────┬─────┘
+       │     declaração (propriedade: valor;)
+       └ seletor (QUEM recebe o estilo)
+   ========================================================================== */
+
+/* ----------------------------------------------------------------------------
+   1. VARIÁVEIS CSS (:root)
+   ----------------------------------------------------------------------------
+   :root representa o elemento <html>, ou seja, a raiz do documento.
+   Variáveis guardam valores reutilizáveis. Em vez de repetir "#2563eb"
+   em 20 lugares, criamos --cor-primaria uma vez e usamos com var(...).
+
+   Vantagem: para trocar a cor do site inteiro, basta mudar AQUI.
+---------------------------------------------------------------------------- */
+:root {
+  --cor-primaria: #2563eb;      /* azul principal (botões, links, destaques) */
+  --cor-primaria-escura: #1d4ed8; /* azul mais escuro (efeito hover do botão) */
+  --cor-fundo: #f8fafc;         /* cinza bem claro do fundo da página */
+  --cor-cartao: #ffffff;        /* branco dos cartões/caixas de conteúdo */
+  --cor-texto: #1e293b;         /* cinza-azulado escuro (texto: bom contraste) */
+  --cor-texto-suave: #64748b;   /* cinza médio (textos secundários) */
+  --cor-borda: #e2e8f0;         /* cinza claro das bordas */
+  --cor-codigo-fundo: #1e293b;  /* fundo escuro dos blocos de código */
+  --cor-codigo-texto: #e2e8f0;  /* texto claro dentro do bloco de código */
+  --raio: 12px;                 /* arredondamento padrão das bordas */
+  --sombra: 0 4px 14px rgba(0, 0, 0, 0.08); /* sombra suave dos cartões */
+}
+
+/* ----------------------------------------------------------------------------
+   2. TEMA ESCURO (modo dark)
+   ----------------------------------------------------------------------------
+   Quando o JavaScript adiciona data-theme="dark" na tag <html>, estas regras
+   SOBRESCREVEM as variáveis acima. Como o site inteiro usa var(...), o tema
+   inteiro muda de uma vez. Isso se chama "troca de tema com variáveis".
+---------------------------------------------------------------------------- */
+html[data-theme="dark"] {
+  --cor-fundo: #0f172a;         /* fundo vira azul-marinho bem escuro */
+  --cor-cartao: #1e293b;        /* cartões viram cinza-azulado escuro */
+  --cor-texto: #f1f5f9;         /* texto vira quase branco (contraste) */
+  --cor-texto-suave: #94a3b8;   /* cinza claro para textos secundários */
+  --cor-borda: #334155;         /* bordas mais escuras */
+  --sombra: 0 4px 14px rgba(0, 0, 0, 0.4); /* sombra mais forte no escuro */
+}
+
+/* ----------------------------------------------------------------------------
+   3. RESET BÁSICO (* = seletor universal)
+   ----------------------------------------------------------------------------
+   O * seleciona TODOS os elementos. Navegadores aplicam margens/paddings
+   padrão diferentes; zerar tudo garante que o site comece igual em todos.
+   box-sizing: border-box faz o padding e a borda NÃO aumentarem o tamanho
+   total do elemento (largura 200px continua 200px). Facilita muito o layout.
+---------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ----------------------------------------------------------------------------
+   4. ESTILOS BASE DO CORPO DA PÁGINA
+   ----------------------------------------------------------------------------
+   body é o seletor do corpo visível da página. Definimos fonte, cores e
+   line-height (altura da linha) para o texto ficar confortável de ler.
+   font-family lista fontes de reserva: se o sistema não tiver a 1ª, usa a 2ª...
+---------------------------------------------------------------------------- */
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  background-color: var(--cor-fundo); /* usa a variável (muda com o tema!) */
+  color: var(--cor-texto);
+  line-height: 1.6; /* 1.6 = espaçamento de 160% entre linhas (boa leitura) */
+
+  /* Flexbox em coluna com altura mínima de 100% da tela: truque para o
+     rodapé (footer) ficar sempre grudado no fim, mesmo em páginas curtas. */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* vh = "viewport height": 100vh = 100% da altura da tela */
+}
+
+/* O conteúdo principal cresce para ocupar o espaço livre (empurra o footer
+   para baixo). flex: 1 significa "cresça o máximo que puder". */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 960px;      /* limita a largura para leitura confortável */
+  margin: 0 auto;        /* auto nas laterais = centraliza o bloco */
+  padding: 2rem 1rem;    /* respiro interno: 2rem cima/baixo, 1rem lados */
+}
+
+/* ----------------------------------------------------------------------------
+   5. CABEÇALHO E MENU DE NAVEGAÇÃO
+   ----------------------------------------------------------------------------
+   header = topo do site. position: sticky faz ele "grudar" no topo quando
+   o usuário rola a página (sempre visível). top: 0 diz ONDE ele gruda.
+---------------------------------------------------------------------------- */
+header {
+  background-color: var(--cor-cartao);
+  border-bottom: 1px solid var(--cor-borda);
+  position: sticky;
+  top: 0;
+  z-index: 100; /* z-index alto = fica POR CIMA de outros elementos ao rolar */
+}
+
+/* .navegacao é uma CLASSE (começa com ponto). Classes podem se repetir em
+   vários elementos, diferente do id (que é único por página). */
+.navegacao {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0.8rem 1rem;
+  display: flex;              /* Flexbox: coloca logo e menu lado a lado */
+  align-items: center;        /* alinha verticalmente ao centro */
+  justify-content: space-between; /* joga logo p/ esquerda e menu p/ direita */
+  gap: 1rem;                  /* espaço mínimo entre os itens */
+}
+
+/* Logo do site (link estilizado como texto em destaque) */
+.logo {
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--cor-primaria);
+  text-decoration: none; /* remove o sublinhado padrão dos links */
+}
+
+/* Lista de links do menu: sem bolinhas, em linha, com espaçamento */
+.menu {
+  list-style: none; /* remove as bolinhas da <ul> */
+  display: flex;
+  gap: 0.4rem;
+}
+
+/* Links do menu */
+.menu a {
+  color: var(--cor-texto);
+  text-decoration: none;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px; /* cantos arredondados ao passar o mouse */
+  transition: background-color 0.2s; /* anima a mudança de cor (suave) */
+}
+
+/* :hover = "quando o mouse passa por cima". É uma PSEUDOCLASSE:
+   estiliza um ESTADO do elemento, sem precisar de JavaScript. */
+.menu a:hover {
+  background-color: var(--cor-borda);
+}
+
+/* Página atual: o link recebe a classe "ativo" no HTML para destacar
+   onde o visitante está. */
+.menu a.ativo {
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+}
+
+/* ---- Botão "hambúrguer" (só aparece no celular) ----
+   display: none esconde no computador. Numa media query abaixo
+   (telas pequenas) ele volta a aparecer. */
+.botao-menu {
+  display: none;
+  font-size: 1.6rem;
+  background: none;
+  border: none;
+  cursor: pointer; /* mãozinha no cursor = indica que é clicável */
+  color: var(--cor-texto);
+}
+
+/* Botão de trocar tema (sol/lua) */
+.botao-tema {
+  background: none;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  padding: 0.4rem 0.7rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* ----------------------------------------------------------------------------
+   6. SEÇÃO DE APRESENTAÇÃO (hero) DA PÁGINA INICIAL
+   ----------------------------------------------------------------------------
+   .hero é o bloco grande de boas-vindas. text-align: center centraliza
+   o texto. O degradê (linear-gradient) mistura duas cores em diagonal.
+---------------------------------------------------------------------------- */
+.hero {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: linear-gradient(135deg, var(--cor-primaria), #7c3aed);
+  color: #ffffff;
+  border-radius: var(--raio);
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ----------------------------------------------------------------------------
+   7. CARTÕES (cards) — grade de links das lições
+   ----------------------------------------------------------------------------
+   .grade usa CSS GRID: cria colunas automáticas. repeat(auto-fit, minmax(...))
+   significa: "crie quantas colunas couberem, cada uma com no mínimo 220px".
+   Resultado: no PC ficam 3 lado a lado; no celular empilham sozinhos.
+   É layout responsivo SEM media query!
+---------------------------------------------------------------------------- */
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+/* Cada cartão é um <a> (link) estilizado como caixa clicável */
+.cartao {
+  background-color: var(--cor-cartao);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--cor-texto);
+  box-shadow: var(--sombra);
+  /* transition com transform: anima o "levantar" do cartão no hover */
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.cartao:hover {
+  transform: translateY(-4px); /* sobe 4px = efeito de flutuação */
+  border-color: var(--cor-primaria);
+}
+
+.cartao .icone {
+  font-size: 2rem; /* emojis funcionam como ícones simples */
+}
+
+.cartao h2, .cartao h3 {
+  margin: 0.5rem 0;
+  color: var(--cor-primaria);
+}
+
+.cartao p {
+  color: var(--cor-texto-suave);
+  font-size: 0.95rem;
+}
+
+/* ----------------------------------------------------------------------------
+   8. CAIXAS DE CONTEÚDO DAS LIÇÕES
+   ----------------------------------------------------------------------------
+   .caixa envolve cada tópico. .dica é a caixa colorida de "atenção/dica".
+   border-left grossa colorida = padrão visual de "nota importante".
+---------------------------------------------------------------------------- */
+.caixa {
+  background-color: var(--cor-cartao);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--sombra);
+}
+
+.caixa h2 {
+  color: var(--cor-primaria);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--cor-borda); /* linha abaixo do título */
+}
+
+.caixa h3 {
+  margin: 1.2rem 0 0.5rem;
+}
+
+.caixa p, .caixa ul, .caixa ol {
+  margin-bottom: 0.8rem;
+}
+
+.caixa ul, .caixa ol {
+  padding-left: 1.5rem; /* devolve o recuo da lista (o reset zerou) */
+}
+
+.caixa li {
+  margin-bottom: 0.3rem;
+}
+
+.dica {
+  background-color: #fef9c3; /* amarelo claro = chama atenção */
+  border-left: 5px solid #eab308;
+  padding: 1rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1rem 0;
+  color: #713f12; /* marrom escuro: legível sobre o amarelo */
+}
+
+/* No tema escuro, a dica precisa de cores adaptadas (contraste) */
+html[data-theme="dark"] .dica {
+  background-color: #422006;
+  color: #fde68a;
+  border-left-color: #f59e0b;
+}
+
+/* ----------------------------------------------------------------------------
+   9. BLOCOS DE CÓDIGO (<pre><code>)
+   ----------------------------------------------------------------------------
+   <pre> = "preformatted": preserva espaços e quebras de linha exatamente
+   como escritos. overflow-x: auto cria rolagem horizontal se o código for
+   mais largo que a tela (não quebra o layout no celular).
+---------------------------------------------------------------------------- */
+pre {
+  background-color: var(--cor-codigo-fundo);
+  color: var(--cor-codigo-texto);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto; /* rolagem lateral só quando necessário */
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+/* code DENTRO de um parágrafo (código curto no meio do texto) */
+p code, li code {
+  background-color: var(--cor-borda);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em; /* em = relativo ao tamanho da fonte do elemento pai */
+}
+
+/* ----------------------------------------------------------------------------
+   10. BOTÕES E FORMULÁRIOS
+   ----------------------------------------------------------------------------
+   Estilo padrão dos botões do site + :hover (mouse em cima) e
+   :active (enquanto está sendo clicado, dá sensação de "apertar").
+---------------------------------------------------------------------------- */
+button, .botao {
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  text-decoration: none;
+  display: inline-block; /* permite padding/largura em links-botão */
+}
+
+button:hover, .botao:hover {
+  background-color: var(--cor-primaria-escura);
+}
+
+button:active, .botao:active {
+  transform: scale(0.97); /* encolhe 3% = sensação de clique */
+}
+
+/* Campos de texto e selects */
+input[type="text"], select {
+  padding: 0.6rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: var(--cor-cartao);
+  color: var(--cor-texto);
+  width: 100%;
+  max-width: 350px;
+}
+
+/* :focus = quando o campo está selecionado (clicado). O outline colorido
+   mostra ONDE o usuário está digitando (importante p/ acessibilidade). */
+input[type="text"]:focus, select:focus {
+  outline: 2px solid var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}
+
+/* ----------------------------------------------------------------------------
+   11. DEMONSTRAÇÕES INTERATIVAS (área de exemplo + resultado)
+   ----------------------------------------------------------------------------
+   .demo é a área pontilhada onde o JavaScript mostra resultados.
+   O estilo diferente (tracejado) sinaliza: "aqui é playground, mexa!".
+---------------------------------------------------------------------------- */
+.demo {
+  border: 2px dashed var(--cor-primaria);
+  border-radius: var(--raio);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+/* Número grande do contador */
+#numero-contador {
+  /* # = seletor de ID (único na página). IDs têm prioridade sobre classes. */
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--cor-primaria);
+  display: block;
+  margin: 0.5rem 0;
+}
+
+/* Quadrado que muda de cor na demonstração de CSS + JS */
+#quadrado-cor {
+  width: 150px;
+  height: 150px;
+  margin: 1rem auto;
+  border-radius: var(--raio);
+  background-color: var(--cor-primaria);
+  /* transition em background-color anima a troca de cor (fade suave) */
+  transition: background-color 0.4s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Itens da mini lista de tarefas */
+#lista-tarefas {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  max-width: 400px;
+  margin: 1rem auto;
+}
+
+#lista-tarefas li {
+  background-color: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between; /* texto à esquerda, botão à direita */
+  align-items: center;
+}
+
+/* Botão pequeno de remover tarefa */
+#lista-tarefas button {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+  background-color: #dc2626; /* vermelho = ação destrutiva (padrão) */
+}
+
+/* ----------------------------------------------------------------------------
+   12. BOX MODEL VISUAL (demonstração na página de CSS)
+   ----------------------------------------------------------------------------
+   Cada camada tem uma cor para você VER: margem (externa), borda,
+   padding (interno) e conteúdo. Abra o DevTools (F12) e passe o mouse
+   sobre este elemento para ver o mesmo desenho feito pelo navegador!
+---------------------------------------------------------------------------- */
+.box-model-demo {
+  background-color: #fdba74;  /* laranja = MARGEM (espaço fora da borda) */
+  padding: 25px;              /* este padding SIMULA a margem visualmente */
+  border-radius: var(--raio);
+  max-width: 420px;
+  margin: 1rem auto;
+  text-align: center;
+  color: #431407;
+  font-weight: bold;
+}
+
+.box-model-borda {
+  background-color: #facc15;  /* amarelo = BORDA */
+  padding: 18px;
+}
+
+.box-model-padding {
+  background-color: #86efac;  /* verde = PADDING (espaço dentro da borda) */
+  padding: 18px;
+}
+
+.box-model-conteudo {
+  background-color: #93c5fd;  /* azul = CONTEÚDO */
+  padding: 18px;
+  border-radius: 6px;
+}
+
+/* Legenda colorida do box model */
+.legenda {
+  display: flex;
+  flex-wrap: wrap; /* quebra linha se não couber (celular) */
+  gap: 0.8rem;
+  justify-content: center;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+/* Quadradinho colorido antes de cada item da legenda (::before cria um
+   elemento visual sem precisar adicionar HTML — "pseudo-elemento") */
+.legenda span::before {
+  content: ""; /* pseudo-elemento precisa de content, mesmo vazio */
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  margin-right: 4px;
+}
+
+/* Cada item pinta seu quadradinho com a cor da camada correspondente */
+.legenda .cor-margem::before { background-color: #fdba74; }
+.legenda .cor-borda::before { background-color: #facc15; }
+.legenda .cor-padding::before { background-color: #86efac; }
+.legenda .cor-conteudo::before { background-color: #93c5fd; }
+
+/* ----------------------------------------------------------------------------
+   13. RODAPÉ
+   ----------------------------------------------------------------------------
+   margin-top: auto empurra o footer para o fim da página (junto com o
+   flex da body). text-align: center centraliza o texto.
+---------------------------------------------------------------------------- */
+footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background-color: var(--cor-cartao);
+  border-top: 1px solid var(--cor-borda);
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+/* Botão flutuante "voltar ao topo" (canto inferior direito) */
+#voltar-topo {
+  position: fixed;  /* fixed = fixo na TELA (não rola com a página) */
+  bottom: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%; /* 50% num quadrado = círculo perfeito */
+  font-size: 1.4rem;
+  padding: 0;
+  display: none; /* começa escondido; o JS mostra ao rolar a página */
+  box-shadow: var(--sombra);
+}
+
+/* ----------------------------------------------------------------------------
+   14. RESPONSIVIDADE (media queries)
+   ----------------------------------------------------------------------------
+   @media aplica regras SOMENTE quando a condição é verdadeira.
+   max-width: 640px = "telas de até 640px" (celulares). É assim que o site
+   se adapta: no celular o menu vira lista vertical escondida atrás do
+   botão hambúrguer, e o título diminui.
+---------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  /* Mostra o botão hambúrguer no celular */
+  .botao-menu {
+    display: block;
+  }
+
+  /* Esconde o menu por padrão; o JS adiciona .aberto ao clicar */
+  .menu {
+    display: none;
+    position: absolute; /* flutua sobre o conteúdo, abaixo do header */
+    top: 100%;          /* exatamente abaixo da barra de navegação */
+    left: 0;
+    right: 0;
+    background-color: var(--cor-cartao);
+    flex-direction: column; /* empilha os links verticalmente */
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--cor-borda);
+  }
+
+  .menu.aberto {
+    display: flex; /* classe adicionada via JS = menu visível */
+  }
+
+  .hero h1 {
+    font-size: 1.6rem; /* título menor para caber no celular */
+  }
+
+  main {
+    padding: 1.2rem 0.8rem;
+  }
+}

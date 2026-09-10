@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!-- ==========================================================================
+  ARQUIVO: javascript.html (LIÇÃO DE JAVASCRIPT)
+  ----------------------------------------------------------------------------
+  Esta página ENSINA JavaScript com exemplos INTERATIVOS de verdade: contador,
+  mensagem que muda, lista de tarefas. Tudo funcionando — e todo o código está
+  comentado em js/script.js. Dica: abra o DevTools (F12) → aba "Console" para
+  ver mensagens e testar comandos JS ao vivo na página!
+============================================================================ -->
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript — Aprenda Web</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <nav class="navegacao">
+      <a class="logo" href="index.html">🌐 Aprenda Web</a>
+      <button class="botao-menu" id="botao-menu" aria-label="Abrir menu">☰</button>
+      <ul class="menu" id="menu">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="html.html">HTML</a></li>
+        <li><a href="css.html">CSS</a></li>
+        <li><a href="javascript.html" class="ativo">JavaScript</a></li>
+      </ul>
+      <button class="botao-tema" id="botao-tema" aria-label="Alternar tema">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="caixa">
+      <h2>⚙️ O que é JavaScript?</h2>
+      <p>
+        <strong>JavaScript (JS)</strong> é a linguagem do <strong>COMPORTAMENTO</strong>:
+        cliques, animações, cálculos, formulários, jogos... Se HTML é o esqueleto e
+        CSS é a roupa, o JS são os <strong>músculos</strong>.
+      </p>
+      <p>A ideia central em 3 passos (vale para TUDO em JS):</p>
+      <pre>// 1. ENCONTRAR o elemento na página (pelo id)
+const botao = document.getElementById("meu-botao");
+
+// 2. OUVIR um evento (ex: clique)
+botao.addEventListener("click", function () {
+  // 3. FAZER algo (ex: mudar um texto)
+  alert("Você clicou!");
+});</pre>
+      <div class="dica">
+        💡 <strong>DOM</strong> = a página vista como objetos. <code>document</code> é a
+        página inteira; <code>getElementById</code> pega um pedaço dela pelo id;
+        <code>addEventListener</code> diz "quando X acontecer, execute Y".
+        Decore esse trio: encontrar → ouvir → fazer!
+      </div>
+    </section>
+
+    <section class="caixa">
+      <h2>📦 Variáveis e funções</h2>
+      <p>
+        <strong>Variável</strong> = caixinha com nome que guarda um valor.
+        <code>let</code> cria caixinha que PODE mudar; <code>const</code> cria
+        caixinha que NÃO muda (constante). <strong>Função</strong> = bloco de código
+        com nome, que só executa quando chamado.
+      </p>
+      <pre>// let: valor PODE mudar (ex: placar de jogo)
+let pontos = 0;
+pontos = pontos + 10;  // agora vale 10
+
+// const: valor NÃO muda (ex: elemento da página)
+const titulo = document.getElementById("titulo");
+
+// function: receita guardada para usar quando quiser
+function dobrar(numero) {
+  return numero * 2;  // return = resposta da função
+}
+dobrar(5);  // responde 10</pre>
+    </section>
+
+    <section class="caixa">
+      <h2>🔢 Exemplo 1: Contador (teste!)</h2>
+      <p>
+        Clique nos botões. Por trás: uma variável <code>contador</code> guarda o valor
+        e cada clique soma/subtrai e atualiza a tela. (Código na seção 4 do script.js.)
+      </p>
+      <div class="demo">
+        <!-- O número exibido. O JS troca o textContent deste span. -->
+        <span id="numero-contador">0</span>
+        <div>
+          <button id="botao-subtrair" type="button">− Subtrair</button>
+          <button id="botao-zerar" type="button">Zerar</button>
+          <button id="botao-somar" type="button">+ Somar</button>
+        </div>
+      </div>
+      <pre>// Resumo do que o JS faz (versão simplificada):
+let contador = 0;
+
+botaoSomar.addEventListener("click", function () {
+  contador = contador + 1;          // 1. muda o VALOR
+  numeroContador.textContent = contador;  // 2. mostra na TELA
+});</pre>
+    </section>
+
+    <section class="caixa">
+      <h2>🔀 Exemplo 2: Condicionais (o programa decide)</h2>
+      <p>
+        <code>if / else</code> = "SE ... SENÃO". Na página inicial há uma saudação que
+        muda sozinha: de manhã "Bom dia", à tarde "Boa tarde", à noite "Boa noite".
+        Este é o código real dela:
+      </p>
+      <pre>const hora = new Date().getHours();  // hora atual (0 a 23)
+
+if (hora &gt;= 5 &amp;&amp; hora &lt; 12) {
+  saudacao.textContent = "Bom dia!";
+} else if (hora &gt;= 12 &amp;&amp; hora &lt; 18) {
+  saudacao.textContent = "Boa tarde!";
+} else {
+  saudacao.textContent = "Boa noite!";
+}
+// &amp;&amp; significa "E" (as duas condições verdadeiras)</pre>
+      <!-- ^^ ATENÇÃO: dentro do <pre> escrevemos &gt; &lt; &amp; para mostrar
+           os símbolos >, < e & sem quebrar o HTML (entidades HTML!). -->
+    </section>
+
+    <section class="caixa">
+      <h2>✅ Exemplo 3: Mini lista de tarefas (teste!)</h2>
+      <p>
+        Digite uma tarefa e clique em <strong>Adicionar</strong> (ou aperte Enter).
+        O JS <strong>CRIA</strong> elementos HTML novos (<code>createElement</code>) e
+        pendura na lista (<code>appendChild</code>). Cada ✖ remove seu item.
+      </p>
+      <div class="demo">
+        <!-- Campo de texto + botão. O label ajuda acessibilidade. -->
+        <label for="campo-tarefa"><strong>Nova tarefa:</strong></label><br><br>
+        <input type="text" id="campo-tarefa" placeholder="Ex: estudar 30 min de JS">
+        <br><br>
+        <button id="botao-adicionar" type="button">Adicionar</button>
+        <!-- A lista começa VAZIA: o JS adiciona <li> aqui via appendChild -->
+        <ul id="lista-tarefas"></ul>
+      </div>
+      <pre>// Resumo do que o JS faz (versão simplificada):
+function adicionarTarefa() {
+  const texto = campoTarefa.value;      // 1. LÊ o que foi digitado
+  const item = document.createElement("li");  // 2. CRIA um &lt;li&gt; novo
+  item.textContent = texto;             // 3. coloca o texto dentro
+  listaTarefas.appendChild(item);       // 4. PENDURA na lista (aparece!)
+  campoTarefa.value = "";               // 5. limpa o campo
+}</pre>
+    </section>
+
+    <section class="caixa">
+      <h2>🔍 Continue explorando</h2>
+      <p>Este site usa ainda mais JavaScript — ache cada um no <code>script.js</code>:</p>
+      <ul>
+        <li><strong>Menu mobile ☰</strong> — abre/fecha com <code>classList.toggle</code> (seção 1).</li>
+        <li><strong>Ano automático</strong> no rodapé com <code>new Date()</code> (seção 2).</li>
+        <li><strong>Tema escuro 🌙</strong> — troca atributo + salva em <code>localStorage</code> (seção 3).</li>
+        <li><strong>Botão ↑</strong> — aparece ao rolar (evento <code>scroll</code>) e sobe suave (seção 8).</li>
+      </ul>
+      <div class="dica">
+        💡 <strong>Console do navegador:</strong> aperte <code>F12</code>, vá na aba
+        <em>Console</em> e digite <code>alert("Olá!")</code> + Enter. Você acabou de
+        executar JavaScript na página! Experimente também:
+        <code>document.title</code> (mostra o título da aba).
+      </div>
+    </section>
+
+    <section class="caixa">
+      <h2>✅ Mini-desafio</h2>
+      <ol>
+        <li>No contador, impeça o valor de ficar negativo (dica: <code>if (contador &gt; 0)</code>).</li>
+        <li>Faça o botão "Zerar" pedir confirmação com <code>confirm("Zerar?")</code>.</li>
+        <li>Crie um botão que muda a saudação da página inicial para seu nome.</li>
+      </ol>
+      <p><a class="botao" href="index.html">← Voltar ao início</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="ano"></span> Aprenda Web — feito para estudar 💙</p>
+    <p>HTML • CSS • JavaScript</p>
+  </footer>
+
+  <button id="voltar-topo" aria-label="Voltar ao topo">↑</button>
+  <script src="js/script.js"></script>
+</body>
+
+</html>
