@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!-- ==========================================================================
+  ARQUIVO: index.html (PÁGINA INICIAL)
+  ----------------------------------------------------------------------------
+  <!DOCTYPE html> = avisa ao navegador: "este documento é HTML5".
+  Sem ele, o navegador entra em "modo estranho" e pode exibir coisas errado.
+
+  O QUE É HTML?
+  HTML (HyperText Markup Language) é a linguagem que define a ESTRUTURA e o
+  CONTEÚDO da página: títulos, textos, links, imagens, botões...
+
+  COMO FUNCIONA UMA TAG?
+  <p>Isso é um parágrafo.</p>
+   │  │                    │
+   │  │                    └─ tag de FECHAMENTO (tem a barra /)
+   │  └─ CONTEÚDO (o que aparece na tela)
+   └─ tag de ABERTURA (+ atributos, ex: <a href="...">)
+
+  DICA DE ESTUDO: neste projeto, TODAS as linhas importantes têm comentários
+  (como este) explicando o PORQUÊ. Leia o código-fonte com calma!
+============================================================================ -->
+
+<!-- lang="pt-BR" informa que o conteúdo está em português do Brasil.
+     Ajuda leitores de tela, tradutores e o Google. -->
+<html lang="pt-BR">
+
+<head>
+  <!-- <head> = CABEÇA do documento: informações SOBRE a página (não visíveis).
+       <body> (mais abaixo) = CORPO: o que realmente APARECE na tela. -->
+
+  <!-- charset UTF-8 = tabela de caracteres com acentos (ã, ç, é...).
+       Sem isso, "informação" poderia aparecer como "informaÃ§Ã£o". -->
+  <meta charset="UTF-8">
+
+  <!-- viewport = ESSENCIAL para celular: faz a página usar a largura real
+       do aparelho e começar com zoom 1. Sem isso, o site fica "minúsculo". -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- <title> = texto que aparece na ABA do navegador. -->
+  <title>Aprenda Web — HTML, CSS e JavaScript</title>
+
+  <!-- <link> CONECTA o arquivo CSS a esta página.
+       rel="stylesheet" = "isto é uma folha de estilos".
+       href="..." = CAMINHO do arquivo (pasta css, arquivo style.css). -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- ======================= CABEÇALHO / MENU ======================= -->
+  <!-- <header> = tag SEMÂNTICA (diz o SIGNIFICADO: "isto é o cabeçalho").
+       Semântica ajuda: acessibilidade, Google e organização do código. -->
+  <header>
+    <!-- <nav> = "isto é uma navegação" (menu de links). -->
+    <nav class="navegacao">
+      <!-- Logo: link que volta para a página inicial. -->
+      <a class="logo" href="index.html">🌐 Aprenda Web</a>
+
+      <!-- Botão hambúrguer ☰: visível SÓ no celular (o CSS controla).
+           aria-label descreve o botão para leitores de tela (acessibilidade).
+           id="botao-menu": o JS usa este id para encontrar o botão. -->
+      <button class="botao-menu" id="botao-menu" aria-label="Abrir menu">☰</button>
+
+      <!-- <ul> = lista NÃO ordenada (com bolinhas). Cada <li> é um item.
+           O menu é uma lista de links — padrão da web. -->
+      <ul class="menu" id="menu">
+        <!-- class="ativo" marca a página atual (o CSS destaca ela). -->
+        <li><a href="index.html" class="ativo">Início</a></li>
+        <li><a href="html.html">HTML</a></li>
+        <li><a href="css.html">CSS</a></li>
+        <li><a href="javascript.html">JavaScript</a></li>
+      </ul>
+
+      <!-- Botão de tema claro/escuro. O JS troca o data-theme do <html>. -->
+      <button class="botao-tema" id="botao-tema" aria-label="Alternar tema">🌙</button>
+    </nav>
+  </header>
+
+  <!-- ======================= CONTEÚDO PRINCIPAL ======================= -->
+  <!-- <main> = tag semântica: "aqui vai o conteúdo PRINCIPAL da página".
+       Deve existir UM <main> por página. -->
+  <main>
+    <!-- Seção de boas-vindas (hero). <section> agrupa conteúdo por tema. -->
+    <section class="hero">
+      <!-- <h1> = título MAIS importante. Deve haver UM por página. -->
+      <h1>Aprenda HTML, CSS e JavaScript</h1>
+      <!-- <p> = parágrafo de texto. -->
+      <p>Um site simples, feito para estudar: todo o código tem explicações.</p>
+      <!-- Este <p> começa vazio: o JAVASCRIPT preenche com "Bom dia/tarde/noite"
+           conforme a hora. Abra js/script.js e procure por "saudacao". -->
+      <p id="saudacao"></p>
+    </section>
+
+    <!-- Cartões que levam para cada lição. Cada cartão é um <a> (link)
+         estilizado como caixa clicável pelo CSS (.cartao). -->
+    <section class="grade">
+      <a class="cartao" href="html.html">
+        <span class="icone">📄</span>
+        <h2>HTML</h2>
+        <p>Estrutura e conteúdo: títulos, textos, listas, links e imagens.</p>
+      </a>
+
+      <a class="cartao" href="css.html">
+        <span class="icone">🎨</span>
+        <h2>CSS</h2>
+        <p>Aparência: cores, espaçamentos, box model e layout responsivo.</p>
+      </a>
+
+      <a class="cartao" href="javascript.html">
+        <span class="icone">⚙️</span>
+        <h2>JavaScript</h2>
+        <p>Interatividade: variáveis, funções, eventos e DOM.</p>
+      </a>
+    </section>
+
+    <!-- Caixa de conteúdo: roteiro de estudos. -->
+    <section class="caixa">
+      <h2>🗺️ Como estudar com este site</h2>
+      <!-- <ol> = lista ORDENADA (numerada): a ordem dos passos importa. -->
+      <ol>
+        <li><strong>Navegue</strong> pelas páginas e teste tudo que é clicável.</li>
+        <li><strong>Leia o código-fonte</strong>: cada arquivo tem comentários explicando o porquê.</li>
+        <li><strong>Abra o DevTools</strong> (tecla <code>F12</code>): inspecione elementos e mexa no CSS ao vivo.</li>
+        <li><strong>Modifique</strong>: mude cores, textos e valores — quebrar e consertar é o melhor jeito de aprender!</li>
+      </ol>
+
+      <!-- Caixa de dica: .dica tem estilo próprio no CSS (fundo amarelo). -->
+      <div class="dica">
+        💡 <strong>Dica:</strong> no navegador, clique com o botão direito em qualquer
+        parte do site e escolha <em>"Inspecionar"</em> para ver o HTML e o CSS
+        funcionando em tempo real.
+      </div>
+    </section>
+
+    <!-- Organização dos arquivos do projeto, com <pre> preservando o desenho. -->
+    <section class="caixa">
+      <h2>📁 Arquivos do projeto</h2>
+      <p>Este é o projeto inteiro — apenas 6 arquivos. Simples de propósito:</p>
+      <!-- <pre> = texto PRÉ-formatado: mantém espaços e quebras de linha. -->
+      <pre>Aprenda Web/
+├── index.html        → esta página (início)
+├── html.html         → lição de HTML
+├── css.html          → lição de CSS
+├── javascript.html   → lição de JavaScript
+├── css/
+│   └── style.css     → TODA a aparência do site
+└── js/
+    └── script.js     → TODA a interatividade do site</pre>
+    </section>
+  </main>
+
+  <!-- ======================= RODAPÉ ======================= -->
+  <!-- <footer> = tag semântica: "isto é o rodapé". -->
+  <footer>
+    <!-- <span id="ano"> começa vazio: o JS preenche com o ano atual. -->
+    <p>© <span id="ano"></span> Aprenda Web — feito para estudar 💙</p>
+    <p>HTML • CSS • JavaScript</p>
+  </footer>
+
+  <!-- Botão flutuante ↑: escondido no início (CSS), o JS mostra ao rolar. -->
+  <button id="voltar-topo" aria-label="Voltar ao topo">↑</button>
+
+  <!-- <script> CONECTA o arquivo JavaScript a esta página.
+       src="..." = caminho do arquivo. Fica no FINAL do <body> para que
+       todo o HTML acima já exista quando o JS for executado. -->
+  <script src="js/script.js"></script>
+</body>
+
+</html>

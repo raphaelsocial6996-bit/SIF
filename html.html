@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!-- ==========================================================================
+  ARQUIVO: html.html (LIÇÃO DE HTML)
+  ----------------------------------------------------------------------------
+  Esta página ENSINA HTML usando o próprio HTML: cada conceito é explicado
+  e logo abaixo aparece o RESULTADO ao vivo. Compare o código-fonte com o
+  que você vê na tela — essa comparação é o coração do aprendizado aqui.
+============================================================================ -->
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML — Aprenda Web</title>
+  <!-- Mesmo CSS do site inteiro: prova de que 1 arquivo serve várias páginas -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <nav class="navegacao">
+      <a class="logo" href="index.html">🌐 Aprenda Web</a>
+      <button class="botao-menu" id="botao-menu" aria-label="Abrir menu">☰</button>
+      <ul class="menu" id="menu">
+        <li><a href="index.html">Início</a></li>
+        <!-- class="ativo" agora está no link HTML: indica "você está aqui" -->
+        <li><a href="html.html" class="ativo">HTML</a></li>
+        <li><a href="css.html">CSS</a></li>
+        <li><a href="javascript.html">JavaScript</a></li>
+      </ul>
+      <button class="botao-tema" id="botao-tema" aria-label="Alternar tema">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="caixa">
+      <h2>📄 O que é HTML?</h2>
+      <p>
+        <strong>HTML</strong> (HyperText Markup Language) é a linguagem de
+        <strong>marcação</strong> que define a estrutura e o conteúdo das páginas.
+        "Marcação" porque você MARCA pedaços do texto com tags dizendo o que
+        cada parte É: <code>&lt;h1&gt;</code> diz "isto é um título",
+        <code>&lt;p&gt;</code> diz "isto é um parágrafo".
+      </p>
+      <div class="dica">
+        💡 <strong>Importante:</strong> no texto acima escrevemos
+        <code>&amp;lt;h1&amp;gt;</code> para MOSTRAR a tag na tela sem que o
+        navegador a interprete. <code>&amp;lt;</code> vira <code>&lt;</code> e
+        <code>&amp;gt;</code> vira <code>&gt;</code>. Isso se chama
+        <strong>entidade HTML</strong>.
+      </div>
+    </section>
+
+    <section class="caixa">
+      <h2>🔤 Títulos e parágrafos</h2>
+      <p>
+        Existem 6 níveis de título, do <code>&lt;h1&gt;</code> (mais importante)
+        ao <code>&lt;h6&gt;</code> (menos importante). Use-os em ORDEM, como um
+        sumário: isso ajuda o Google e leitores de tela a entender a página.
+      </p>
+      <!-- ABAIXO: exemplo AO VIVO. O que você vê renderizado é gerado
+           exatamente por estas tags. Leia o fonte e compare com a tela! -->
+      <h1>Título h1 (só 1 por página)</h1>
+      <h2>Título h2 (seções)</h2>
+      <h3>Título h3 (subseções)</h3>
+      <p>Isto é um parágrafo (&lt;p&gt;). Parágrafos separam blocos de texto com respiro automático.</p>
+      <p>
+        Dentro de um parágrafo você pode destacar com
+        <strong>negrito (&lt;strong&gt; = importante)</strong> e
+        <em>itálico (&lt;em&gt; = ênfase)</em>.
+      </p>
+    </section>
+
+    <section class="caixa">
+      <h2>📝 Listas</h2>
+      <p>
+        <code>&lt;ul&gt;</code> = lista NÃO ordenada (bolinhas, ordem não importa).
+        <code>&lt;ol&gt;</code> = lista ORDENADA (numerada, ordem importa).
+        <code>&lt;li&gt;</code> = cada ITEM da lista (sempre dentro de ul ou ol).
+      </p>
+      <h3>Lista não ordenada (compras):</h3>
+      <ul>
+        <li>Café</li>
+        <li>Pão</li>
+        <li>Queijo</li>
+      </ul>
+      <h3>Lista ordenada (passos):</h3>
+      <ol>
+        <li>Ferver a água</li>
+        <li>Passar o café</li>
+        <li>Servir</li>
+      </ol>
+    </section>
+
+    <section class="caixa">
+      <h2>🔗 Links e imagens</h2>
+      <p>
+        <code>&lt;a href="..."&gt;</code> cria um LINK. O atributo
+        <code>href</code> diz PARA ONDE ele vai. Links podem apontar para outra
+        página do site, um site externo ou uma parte da mesma página.
+      </p>
+      <!-- Link interno: vai para outra página DESTE site -->
+      <p><a href="css.html">👉 Ir para a lição de CSS (link interno)</a></p>
+      <!-- target="_blank" abre em NOVA ABA. rel="noopener" é segurança:
+           impede a nova aba de controlar a aba original. -->
+      <p><a href="https://developer.mozilla.org/pt-BR/" target="_blank" rel="noopener">👉 MDN Web Docs (link externo, nova aba)</a></p>
+
+      <h3>Imagem</h3>
+      <p>
+        <code>&lt;img src="..." alt="..."&gt;</code> exibe uma imagem.
+        <code>src</code> = caminho da imagem. <code>alt</code> = texto alternativo:
+        descreve a imagem para cegos (leitores de tela) e aparece se a imagem
+        não carregar. <strong>Sempre preencha o alt!</strong>
+      </p>
+      <!-- Exemplo com imagem externa (picsum = serviço de imagens de teste).
+           width limita o tamanho; style aqui é só para o exemplo não estourar. -->
+      <img src="https://picsum.photos/600/200" alt="Imagem aleatória de exemplo" width="600" style="max-width: 100%; border-radius: 8px;">
+    </section>
+
+    <section class="caixa">
+      <h2>📊 Tabelas</h2>
+      <p>
+        Tabelas organizam DADOS em linhas e colunas:
+        <code>&lt;table&gt;</code> (tabela) → <code>&lt;tr&gt;</code> (linha) →
+        <code>&lt;th&gt;</code> (célula de CABEÇALHO) ou <code>&lt;td&gt;</code>
+        (célula de DADO). Use tabelas para dados, NUNCA para montar layout!
+      </p>
+      <!-- border="1" é um atributo antigo só para a borda aparecer no exemplo.
+           Num site real, a borda seria feita com CSS. -->
+      <table border="1" cellpadding="8" style="border-collapse: collapse; width: 100%;">
+        <tr>
+          <th>Linguagem</th>
+          <th>Serve para</th>
+          <th>Dificuldade</th>
+        </tr>
+        <tr>
+          <td>HTML</td>
+          <td>Estrutura</td>
+          <td>⭐ Fácil</td>
+        </tr>
+        <tr>
+          <td>CSS</td>
+          <td>Aparência</td>
+          <td>⭐⭐ Média</td>
+        </tr>
+        <tr>
+          <td>JavaScript</td>
+          <td>Interatividade</td>
+          <td>⭐⭐⭐ Desafiadora</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="caixa">
+      <h2>🧱 Div, span e tags semânticas</h2>
+      <p>
+        <code>&lt;div&gt;</code> = caixa genérica em BLOCO (ocupa a linha toda).
+        <code>&lt;span&gt;</code> = caixa genérica em LINHA (só o tamanho do texto).
+        Elas não dizem NADA sobre o conteúdo — servem para agrupar e estilizar.
+      </p>
+      <p>
+        Já as tags <strong>semânticas</strong> dizem o SIGNIFICADO:
+        <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>,
+        <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>,
+        <code>&lt;footer&gt;</code> — todas usadas neste próprio site!
+      </p>
+      <!-- Exemplo ao vivo: este bloco É uma div com um span dentro -->
+      <div style="border: 2px solid #2563eb; border-radius: 8px; padding: 1rem;">
+        Sou uma <strong>&lt;div&gt;</strong> (bloco, linha toda).
+        E isto é um <span style="background: #fef08a; padding: 0 6px; border-radius: 4px;">&lt;span&gt;</span> (em linha, só envolve o texto).
+      </div>
+    </section>
+
+    <section class="caixa">
+      <h2>✅ Mini-desafio</h2>
+      <p>Agora é sua vez! Abra este arquivo (<code>html.html</code>) no editor e tente:</p>
+      <ol>
+        <li>Adicionar um item novo em cada lista acima.</li>
+        <li>Criar um link para a página <code>javascript.html</code>.</li>
+        <li>Adicionar uma nova linha na tabela.</li>
+      </ol>
+      <p><a class="botao" href="css.html">Próxima lição: CSS →</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="ano"></span> Aprenda Web — feito para estudar 💙</p>
+    <p>HTML • CSS • JavaScript</p>
+  </footer>
+
+  <button id="voltar-topo" aria-label="Voltar ao topo">↑</button>
+  <script src="js/script.js"></script>
+</body>
+
+</html>

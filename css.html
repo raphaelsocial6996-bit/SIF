@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!-- ==========================================================================
+  ARQUIVO: css.html (LIÇÃO DE CSS)
+  ----------------------------------------------------------------------------
+  Esta página ENSINA CSS: o que é, as 3 formas de aplicar, seletores,
+  cores, box model e um exemplo interativo (JS + CSS juntos) onde você
+  troca a cor de um quadrado. O estilo DESTA página vem de css/style.css —
+  abra os dois lado a lado para estudar.
+============================================================================ -->
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS — Aprenda Web</title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- ================================================================
+    EXEMPLO DE CSS INTERNO (<style> no <head>).
+    As 3 FORMAS de aplicar CSS (da MELHOR para a PIOR):
+    1. EXTERNO (arquivo .css separado) ← o que este site usa. Reutilizável!
+    2. INTERNO (tag <style> aqui no head) ← vale só para ESTA página.
+    3. INLINE (atributo style="..." na tag) ← vale só para AQUELE elemento.
+    Regra: prefira sempre o EXTERNO. Os outros são para casos especiais.
+  ================================================================== -->
+  <style>
+    /* Esta classe existe SÓ nesta página, por isso ficou no CSS interno.
+       Ela estiliza o exemplo de "texto estilizado" mais abaixo. */
+    .exemplo-interno {
+      color: #7c3aed;          /* roxo */
+      font-weight: bold;       /* negrito */
+      font-size: 1.2rem;       /* 1.2x o tamanho padrão (rem = relativo) */
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navegacao">
+      <a class="logo" href="index.html">🌐 Aprenda Web</a>
+      <button class="botao-menu" id="botao-menu" aria-label="Abrir menu">☰</button>
+      <ul class="menu" id="menu">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="html.html">HTML</a></li>
+        <li><a href="css.html" class="ativo">CSS</a></li>
+        <li><a href="javascript.html">JavaScript</a></li>
+      </ul>
+      <button class="botao-tema" id="botao-tema" aria-label="Alternar tema">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="caixa">
+      <h2>🎨 O que é CSS?</h2>
+      <p>
+        <strong>CSS</strong> (Cascading Style Sheets) é a linguagem da
+        <strong>APARÊNCIA</strong>: cores, fontes, tamanhos, espaçamentos,
+        posições e até animações. O HTML diz <em>o que</em> é; o CSS diz
+        <em>como aparece</em>.
+      </p>
+      <p>Uma regra CSS tem 3 partes — leia o exemplo com calma:</p>
+      <pre>/* seletor { propriedade: valor; } */
+.titulo {
+  color: blue;       /* cor do TEXTO */
+  font-size: 24px;   /* tamanho da fonte */
+}</pre>
+      <p>
+        <strong>Seletor</strong> = QUEM recebe o estilo.
+        <strong>Propriedade</strong> = O QUE mudar. <strong>Valor</strong> = COMO.
+      </p>
+    </section>
+
+    <section class="caixa">
+      <h2>🎯 Seletores (os 4 essenciais)</h2>
+      <p>Seletores ESCOLHEM quais elementos serão estilizados:</p>
+      <pre>/* 1. Por TAG: afeta TODOS os &lt;p&gt; da página */
+p { line-height: 1.6; }
+
+/* 2. Por CLASSE (.nome): afeta quem tem class="nome".
+      Pode REPETIR em vários elementos. É o mais usado! */
+.destaque { background: yellow; }
+
+/* 3. Por ID (#nome): afeta O elemento com id="nome".
+      Deve ser ÚNICO por página. */
+#menu { display: flex; }
+
+/* 4. Por ESTADO (:hover): quando o mouse passa por cima.
+      Chama-se PSEUDOCLASSE. Não precisa de JavaScript! */
+button:hover { background: darkblue; }</pre>
+      <div class="dica">
+        💡 <strong>Regra de ouro:</strong> use <strong>classes</strong> para estilo
+        (reutilizáveis) e <strong>ids</strong> para o JavaScript encontrar um
+        elemento específico. Foi exatamente assim que este site foi feito!
+      </div>
+    </section>
+
+    <section class="caixa">
+      <h2>🌈 Cores no CSS</h2>
+      <p>As 3 formas mais comuns de escrever cores:</p>
+      <pre>/* Nome da cor (simples, poucas opções) */
+p { color: red; }
+
+/* HEXADECIMAL (mais usado: #RRGGBB) */
+p { color: #2563eb; }  /* azul deste site */
+
+/* RGB com transparência (a = alpha, 0 a 1) */
+p { color: rgba(0, 0, 0, 0.5); }  /* preto 50% transparente */</pre>
+      <!-- Amostras AO VIVO das 3 formas de cor -->
+      <p style="color: red;">⬤ Esta frase usa color: red (nome)</p>
+      <p style="color: #2563eb;">⬤ Esta frase usa color: #2563eb (hexadecimal)</p>
+      <p style="color: rgba(0, 0, 0, 0.5);">⬤ Esta frase usa rgba com 50% de transparência</p>
+      <!-- ^^ EXEMPLOS DE CSS INLINE (style="..."): usados aqui de propósito
+           para demonstrar. Em site real, prefira o arquivo externo! -->
+    </section>
+
+    <section class="caixa">
+      <h2>📦 Box Model (o conceito mais importante do CSS)</h2>
+      <p>
+        Todo elemento é uma CAIXA com 4 camadas, de dentro para fora:
+        <strong>conteúdo</strong> → <strong>padding</strong> (respiro interno) →
+        <strong>borda</strong> → <strong>margem</strong> (distância externa).
+      </p>
+      <!-- Demonstração VISUAL: cada div é uma camada com cor diferente.
+           As classes .box-model-* estão definidas no css/style.css -->
+      <div class="box-model-demo">
+        MARGEM
+        <div class="box-model-borda">
+          BORDA
+          <div class="box-model-padding">
+            PADDING
+            <div class="box-model-conteudo">CONTEÚDO</div>
+          </div>
+        </div>
+      </div>
+      <div class="legenda">
+        <span class="cor-margem">Margem</span>
+        <span class="cor-borda">Borda</span>
+        <span class="cor-padding">Padding</span>
+        <span class="cor-conteudo">Conteúdo</span>
+      </div>
+      <div class="dica">
+        💡 <strong>Confundiu margem com padding?</strong> Pense numa foto com moldura
+        na parede: o <strong>padding</strong> é o papelão ENTRE a foto e a moldura;
+        a <strong>margem</strong> é a distância da moldura até os OUTROS quadros.
+      </div>
+    </section>
+
+    <section class="caixa">
+      <h2>🧪 Teste ao vivo: CSS + JavaScript juntos</h2>
+      <p>
+        Escolha uma cor abaixo. O <strong>JavaScript</strong> lê sua escolha e muda
+        o <strong>CSS</strong> do quadrado na hora — sem recarregar a página!
+        (Veja a função no <code>js/script.js</code>, seção 5.)
+      </p>
+      <!-- .demo = área de playground (borda tracejada). -->
+      <div class="demo">
+        <!-- <label> descreve o campo (acessibilidade: clique no texto foca o campo).
+             for="seletor-cor" LIGA o label ao select com id="seletor-cor". -->
+        <label for="seletor-cor"><strong>Escolha uma cor:</strong></label>
+        <br><br>
+        <!-- <select> = menu suspenso. Cada <option> é uma escolha.
+             value="..." = valor que o JS vai ler (o código da cor). -->
+        <select id="seletor-cor">
+          <option value="#2563eb">Azul (padrão)</option>
+          <option value="#dc2626">Vermelho</option>
+          <option value="#16a34a">Verde</option>
+          <option value="#eab308">Amarelo</option>
+          <option value="#7c3aed">Roxo</option>
+        </select>
+        <!-- O quadrado que muda de cor. Começa mostrando o azul padrão. -->
+        <div id="quadrado-cor">#2563eb</div>
+      </div>
+      <p class="exemplo-interno">
+        ↑ Esta frase roxa usa CSS INTERNO (a classe .exemplo-interno definida no
+        &lt;style&gt; lá no &lt;head&gt; desta página).
+      </p>
+    </section>
+
+    <section class="caixa">
+      <h2>📱 Responsividade (site que se adapta ao celular)</h2>
+      <p>
+        Sites modernos usam <strong>media queries</strong>: regras CSS que só valem
+        em certo tamanho de tela. É assim que este site transforma o menu em ☰
+        no celular. Teste: diminua a janela do navegador e observe!
+      </p>
+      <pre>/* "Se a tela tiver ATÉ 640px, aplique estas regras" */
+@media (max-width: 640px) {
+  .botao-menu {
+    display: block;  /* mostra o botão ☰ */
+  }
+  .menu {
+    display: none;   /* esconde o menu (JS reabre ao clicar) */
+  }
+}</pre>
+    </section>
+
+    <section class="caixa">
+      <h2>✅ Mini-desafio</h2>
+      <ol>
+        <li>Abra <code>css/style.css</code> e mude <code>--cor-primaria</code> para sua cor favorita. Veja o site inteiro mudar!</li>
+        <li>Adicione uma nova <code>&lt;option&gt;</code> de cor no select acima.</li>
+        <li>Clique na 🌙 do menu: o tema escuro funciona trocando variáveis CSS. Ache o código no style.css!</li>
+      </ol>
+      <p><a class="botao" href="javascript.html">Próxima lição: JavaScript →</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="ano"></span> Aprenda Web — feito para estudar 💙</p>
+    <p>HTML • CSS • JavaScript</p>
+  </footer>
+
+  <button id="voltar-topo" aria-label="Voltar ao topo">↑</button>
+  <script src="js/script.js"></script>
+</body>
+
+</html>
